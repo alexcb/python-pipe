@@ -1,6 +1,12 @@
 # python-pipe
 python-pipe is a command line tool for processing text files line-by-line; it's like awk but for python-users.
 
+# Usage
+
+    cat <input file> | python-pipe [--start <INIT_CODE>] <CODE> [--end <FINAL_CODE>]
+    
+`<CODE>` is a single line of python code which will be executed; it will have a variable `l` or `line` which is set to the current line being processed. `<INIT_CODE>` and `<FINAL_CODE>` will be run at the start and end of the program respectively. If `<FINAL_CODE>` is ommitted, any global variables (aside from the line) will be displayed. 
+
 # Examples
 
 ## Input file
