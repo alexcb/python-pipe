@@ -16,11 +16,15 @@ def main():
 
     myvars = {}
 
+    vars_to_ignore = ['l', 'line']
+
     if args.source:
         spec = importlib.util.spec_from_file_location("mymodule", args.source)
         mymodule = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mymodule)
         myvars.update(mymodule.__dict__)
+        for k in myvars.keys():
+            vars_to_ignore.append(k)
 
     if args.start:
         exec(args.start, globals(), myvars)
@@ -35,7 +39,7 @@ def main():
         exec(args.end, globals(), myvars)
     else:
         for k,v in myvars.items():
-            if k not in ('line', 'l'):
+            if k not in vars_to_ignore:
                 print(f'{k}: {v}')
 
 if __name__ == '__main__':

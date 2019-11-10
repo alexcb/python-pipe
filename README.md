@@ -36,3 +36,19 @@ python-pipe is a command line tool for processing text files line-by-line; it's 
 ## compute average (example using the --end option to override the default behaviour of printing all variables)
     $ cat sushi | python-pipe --start 'total=0; num=0' 'total += float(l.split()[-1]); num += 1' --end 'print(f"average: {total/num}")'
     average: 4.241666666666666
+
+## Including helper functions from other python code
+python code in separate files can be included with the `--source` option. Consider a file with a function to define
+which sushi is good:
+
+    $ cat sushi_funcs.py 
+    def is_good(x):
+        return x.lower() in('inari', 'sake')
+
+In this example we only print out the sushi which matches the if statement:
+    
+    $ cat sushi | python-pipe --source sushi_funcs.py 'if is_good(l.split()[0]): print(l)'
+    Sake             3.95
+    Inari            3.25
+
+
